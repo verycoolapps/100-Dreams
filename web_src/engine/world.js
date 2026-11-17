@@ -45,11 +45,14 @@ export class World {
 
     for (const o of data.objects || []) this.meta.set(sanitizeName(o.name), o);
     let lightCount = 0;
+    const env = data.environment || {};
+    const envBoost = THREE.MathUtils.clamp((env.strength ?? 1) * (env.hdri ? 1.35 : 1), 0.2, 1.8);
     gltf.scene.updateMatrixWorld(true);
     gltf.scene.traverse((n) => {
       if (n.name) this.byName.set(n.name, n);
       if (n.isLight) {
         lightCount++;
+        n.intensity = (n.intensity ?? 1) * (n.isDirectionalLight ? 1.5 : 1.15);
         if (n.isDirectionalLight || (n.isSpotLight && lightCount <= 4)) { n.castShadow = true; n.shadow.bias = -0.0004; n.shadow.normalBias = 0.02; }
       }
       if (n.isMesh) {
@@ -57,7 +60,7 @@ export class World {
         for (const m of [].concat(n.material)) {
           if (m.transparent && m.opacity < 1) n.castShadow = false;
           if (m.map) m.map.colorSpace = THREE.SRGBColorSpace;
-          if ('envMapIntensity' in m) m.envMapIntensity = 0.45;
+          if ('envMapIntensity' in m) m.envMapIntensity = 0.45 * envBoost;
         }
       }
     });
@@ -145,6 +148,8 @@ export class World {
     t.minFilter = THREE.LinearFilter; t.magFilter = THREE.LinearFilter; t.generateMipmaps = false; t.flipY = true; t.needsUpdate = true;
     this.app.renderer.setEnvironmentTexture(t, true);
     this.sky.visible = false;
+    // Blender's world background has no aerial haze; drop the gradient-sky fog so distance matches the render.
+    this.app.scene.fog = null;
   }
 
   buildColliders(data) {
