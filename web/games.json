@@ -1,0 +1,1414 @@
+{
+ "version": 1,
+ "categories": {
+  "exploration": "Eksplorasi",
+  "puzzle": "Teka-teki",
+  "character": "Karakter",
+  "animal": "Hewan",
+  "action": "Aksi",
+  "creative": "Kreatif",
+  "education": "Edukasi",
+  "adventure": "Petualangan",
+  "social": "Sosial & Kompetisi",
+  "special": "Spesial"
+ },
+ "games": [
+  {
+   "no": 1,
+   "id": "hidden-treasure-hunt",
+   "title": "Hidden Treasure Hunt",
+   "cat": "exploration",
+   "mech": "collect",
+   "p": {
+    "count": 6,
+    "time": 180,
+    "hidden": true
+   },
+   "pitch": "Enam harta kecil tersembunyi di sudut dunia. Temukan semuanya sebelum waktu habis."
+  },
+  {
+   "no": 2,
+   "id": "secret-room-discovery",
+   "title": "Secret Room Discovery",
+   "cat": "exploration",
+   "mech": "collect",
+   "p": {
+    "count": 3,
+    "time": 240,
+    "hidden": true,
+    "interior": true,
+    "exit": true
+   },
+   "pitch": "Kunci rahasia ada di dalam ruangan beratap. Kumpulkan, lalu buka portal keluar."
+  },
+  {
+   "no": 3,
+   "id": "world-explorer",
+   "title": "World Explorer",
+   "cat": "exploration",
+   "mech": "race",
+   "p": {
+    "count": 5,
+    "time": 240,
+    "anchor": "landmark"
+   },
+   "pitch": "Kunjungi lima landmark terbesar dunia ini secara berurutan."
+  },
+  {
+   "no": 4,
+   "id": "object-detective",
+   "title": "Object Detective",
+   "cat": "exploration",
+   "mech": "find",
+   "p": {
+    "count": 5,
+    "time": 240,
+    "clue": "mixed"
+   },
+   "pitch": "Petunjuk berupa material, ukuran, atau kategori. Tunjuk objek yang cocok."
+  },
+  {
+   "no": 5,
+   "id": "landmark-challenge",
+   "title": "Landmark Challenge",
+   "cat": "exploration",
+   "mech": "find",
+   "p": {
+    "count": 4,
+    "time": 180,
+    "clue": "name",
+    "filter": "large"
+   },
+   "pitch": "Cari landmark yang namanya disebut, secepat mungkin."
+  },
+  {
+   "no": 6,
+   "id": "mystery-path",
+   "title": "Mystery Path",
+   "cat": "exploration",
+   "mech": "collect",
+   "p": {
+    "count": 8,
+    "time": 200,
+    "ordered": true
+   },
+   "pitch": "Rune bernomor harus disentuh berurutan. Salah urut tidak dihitung."
+  },
+  {
+   "no": 7,
+   "id": "hidden-object-finder",
+   "title": "Hidden Object Finder",
+   "cat": "exploration",
+   "mech": "find",
+   "p": {
+    "count": 6,
+    "time": 240,
+    "clue": "name",
+    "filter": "small"
+   },
+   "pitch": "Objek-objek kecil disebut namanya. Temukan dan tunjuk."
+  },
+  {
+   "no": 8,
+   "id": "time-exploration",
+   "title": "Time Exploration",
+   "cat": "exploration",
+   "mech": "race",
+   "p": {
+    "count": 6,
+    "time": 60,
+    "timeBonus": 15
+   },
+   "pitch": "Waktu awal singkat; setiap gerbang menambah 15 detik."
+  },
+  {
+   "no": 9,
+   "id": "world-collector",
+   "title": "World Collector",
+   "cat": "exploration",
+   "mech": "collect",
+   "p": {
+    "count": 15,
+    "time": 300
+   },
+   "pitch": "Lima belas kristal tersebar. Kumpulkan semuanya."
+  },
+  {
+   "no": 10,
+   "id": "ultimate-explorer",
+   "title": "Ultimate Explorer",
+   "cat": "exploration",
+   "mech": "gauntlet",
+   "p": {
+    "stages": [
+     "hidden-treasure-hunt",
+     "object-detective",
+     "mystery-path"
+    ]
+   },
+   "pitch": "Tiga ujian eksplorasi berturut-turut tanpa jeda."
+  },
+  {
+   "no": 11,
+   "id": "logic-chamber",
+   "title": "Logic Chamber",
+   "cat": "puzzle",
+   "mech": "logic",
+   "p": {
+    "kind": "lightsout",
+    "size": 5,
+    "time": 300
+   },
+   "pitch": "Menekan satu sel membalik sel itu dan tetangganya. Matikan semua cahaya."
+  },
+  {
+   "no": 12,
+   "id": "shape-matching",
+   "title": "Shape Matching",
+   "cat": "puzzle",
+   "mech": "pairs",
+   "p": {
+    "source": "shapes",
+    "pairs": 6,
+    "flips": 30,
+    "time": 180
+   },
+   "pitch": "Pasangkan bentuk-bentuk geometris yang sama."
+  },
+  {
+   "no": 13,
+   "id": "color-sequence",
+   "title": "Color Sequence",
+   "cat": "puzzle",
+   "mech": "sequence",
+   "p": {
+    "pads": "colors",
+    "length": 6,
+    "time": 240
+   },
+   "pitch": "Warna diambil dari material dunia ini. Ulangi urutannya."
+  },
+  {
+   "no": 14,
+   "id": "object-arrangement",
+   "title": "Object Arrangement",
+   "cat": "puzzle",
+   "mech": "arrange",
+   "p": {
+    "mode": "zones",
+    "count": 4,
+    "time": 240
+   },
+   "pitch": "Pindahkan setiap balok ke zona yang warnanya sama."
+  },
+  {
+   "no": 15,
+   "id": "pattern-detective",
+   "title": "Pattern Detective",
+   "cat": "puzzle",
+   "mech": "logic",
+   "p": {
+    "kind": "pattern",
+    "rounds": 6,
+    "time": 180
+   },
+   "pitch": "Tebak angka berikutnya dalam deret."
+  },
+  {
+   "no": 16,
+   "id": "memory-challenge",
+   "title": "Memory Challenge",
+   "cat": "puzzle",
+   "mech": "pairs",
+   "p": {
+    "source": "objects",
+    "pairs": 8,
+    "flips": 40,
+    "time": 240
+   },
+   "pitch": "Kartu memori berisi nama-nama objek dunia ini."
+  },
+  {
+   "no": 17,
+   "id": "spatial-puzzle",
+   "title": "Spatial Puzzle",
+   "cat": "puzzle",
+   "mech": "logic",
+   "p": {
+    "kind": "slide",
+    "size": 3,
+    "time": 300
+   },
+   "pitch": "Geser ubin sampai urutannya kembali 1 sampai 8."
+  },
+  {
+   "no": 18,
+   "id": "light-and-shadow-puzzle",
+   "title": "Light and Shadow Puzzle",
+   "cat": "puzzle",
+   "mech": "studio",
+   "p": {
+    "kind": "light",
+    "rounds": 3,
+    "time": 240
+   },
+   "pitch": "Atur arah dan ketinggian matahari sampai bayangan cocok dengan target."
+  },
+  {
+   "no": 19,
+   "id": "mechanical-puzzle",
+   "title": "Mechanical Puzzle",
+   "cat": "puzzle",
+   "mech": "logic",
+   "p": {
+    "kind": "dials",
+    "size": 4,
+    "time": 300
+   },
+   "pitch": "Setiap tuas memutar beberapa roda sekaligus. Samakan kode target."
+  },
+  {
+   "no": 20,
+   "id": "master-puzzle",
+   "title": "Master Puzzle",
+   "cat": "puzzle",
+   "mech": "gauntlet",
+   "p": {
+    "stages": [
+     "logic-chamber",
+     "pattern-detective",
+     "spatial-puzzle"
+    ]
+   },
+   "pitch": "Tiga teka-teki terberat berturut-turut."
+  },
+  {
+   "no": 21,
+   "id": "npc-conversation-quest",
+   "title": "NPC Conversation Quest",
+   "cat": "character",
+   "mech": "race",
+   "p": {
+    "count": 3,
+    "time": 240,
+    "anchor": "character",
+    "talk": true
+   },
+   "pitch": "Datangi tiga karakter dan ajak bicara dengan tombol E."
+  },
+  {
+   "no": 22,
+   "id": "character-memory",
+   "title": "Character Memory",
+   "cat": "character",
+   "mech": "pairs",
+   "p": {
+    "source": "characters",
+    "pairs": 6,
+    "flips": 30,
+    "time": 180
+   },
+   "pitch": "Pasangkan kartu nama karakter."
+  },
+  {
+   "no": 23,
+   "id": "follow-the-character",
+   "title": "Follow the Character",
+   "cat": "character",
+   "mech": "follow",
+   "p": {
+    "target": "character",
+    "hold": 30,
+    "radius": 4,
+    "maxAway": 6,
+    "time": 120
+   },
+   "pitch": "Tetap dekat karakter yang berjalan selama 30 detik total."
+  },
+  {
+   "no": 24,
+   "id": "character-racing",
+   "title": "Character Racing",
+   "cat": "character",
+   "mech": "race",
+   "p": {
+    "count": 6,
+    "time": 150,
+    "rival": true
+   },
+   "pitch": "Balapan melawan karakter melewati enam gerbang. Jangan sampai kalah."
+  },
+  {
+   "no": 25,
+   "id": "character-hide-and-seek",
+   "title": "Character Hide and Seek",
+   "cat": "character",
+   "mech": "hideseek",
+   "p": {
+    "target": "character",
+    "time": 150
+   },
+   "pitch": "Seorang karakter bersembunyi. Ikuti indikator panas-dingin."
+  },
+  {
+   "no": 26,
+   "id": "dialogue-detective",
+   "title": "Dialogue Detective",
+   "cat": "character",
+   "mech": "quiz",
+   "p": {
+    "topic": "character",
+    "count": 5,
+    "lives": 3,
+    "time": 240
+   },
+   "pitch": "Pertanyaan tentang siapa berada di mana dalam dunia ini."
+  },
+  {
+   "no": 27,
+   "id": "character-collection",
+   "title": "Character Collection",
+   "cat": "character",
+   "mech": "find",
+   "p": {
+    "count": 4,
+    "time": 200,
+    "clue": "name",
+    "filter": "character"
+   },
+   "pitch": "Temukan dan tunjuk setiap karakter yang disebut."
+  },
+  {
+   "no": 28,
+   "id": "animation-challenge",
+   "title": "Animation Challenge",
+   "cat": "character",
+   "mech": "sequence",
+   "p": {
+    "pads": "poses",
+    "length": 5,
+    "time": 240
+   },
+   "pitch": "Karakter memperagakan gerakan. Ulangi urutannya."
+  },
+  {
+   "no": 29,
+   "id": "character-rescue",
+   "title": "Character Rescue",
+   "cat": "character",
+   "mech": "rescue",
+   "p": {
+    "target": "character",
+    "count": 1,
+    "time": 200
+   },
+   "pitch": "Temukan karakter yang tersesat dan antar ke zona aman."
+  },
+  {
+   "no": 30,
+   "id": "ultimate-character-quest",
+   "title": "Ultimate Character Quest",
+   "cat": "character",
+   "mech": "gauntlet",
+   "p": {
+    "stages": [
+     "npc-conversation-quest",
+     "character-hide-and-seek",
+     "character-rescue"
+    ]
+   },
+   "pitch": "Tiga misi karakter berturut-turut."
+  },
+  {
+   "no": 31,
+   "id": "animal-discovery",
+   "title": "Animal Discovery",
+   "cat": "animal",
+   "mech": "find",
+   "p": {
+    "count": 4,
+    "time": 200,
+    "clue": "name",
+    "filter": "animal"
+   },
+   "pitch": "Cari dan tunjuk setiap hewan yang disebut."
+  },
+  {
+   "no": 32,
+   "id": "animal-matching",
+   "title": "Animal Matching",
+   "cat": "animal",
+   "mech": "pairs",
+   "p": {
+    "source": "animals",
+    "pairs": 6,
+    "flips": 30,
+    "time": 180
+   },
+   "pitch": "Pasangkan kartu nama hewan."
+  },
+  {
+   "no": 33,
+   "id": "animal-rescue",
+   "title": "Animal Rescue",
+   "cat": "animal",
+   "mech": "rescue",
+   "p": {
+    "target": "animal",
+    "count": 2,
+    "time": 240
+   },
+   "pitch": "Dua hewan tersesat. Antar mereka pulang ke zona aman."
+  },
+  {
+   "no": 34,
+   "id": "animal-memory",
+   "title": "Animal Memory",
+   "cat": "animal",
+   "mech": "sequence",
+   "p": {
+    "pads": "animals",
+    "length": 6,
+    "time": 240
+   },
+   "pitch": "Hewan menyala bergantian. Ulangi urutannya."
+  },
+  {
+   "no": 35,
+   "id": "habitat-explorer",
+   "title": "Habitat Explorer",
+   "cat": "animal",
+   "mech": "race",
+   "p": {
+    "count": 4,
+    "time": 240,
+    "anchor": "animal"
+   },
+   "pitch": "Kunjungi habitat setiap hewan dan baca kartunya."
+  },
+  {
+   "no": 36,
+   "id": "animal-feeding-challenge",
+   "title": "Animal Feeding Challenge",
+   "cat": "animal",
+   "mech": "feed",
+   "p": {
+    "count": 5,
+    "time": 180
+   },
+   "pitch": "Ambil makanan, antar ke hewan sebelum mereka lapar."
+  },
+  {
+   "no": 37,
+   "id": "animal-tracking",
+   "title": "Animal Tracking",
+   "cat": "animal",
+   "mech": "follow",
+   "p": {
+    "target": "animal",
+    "hold": 25,
+    "radius": 5,
+    "maxAway": 8,
+    "time": 120
+   },
+   "pitch": "Ikuti jejak hewan tanpa kehilangan jejaknya."
+  },
+  {
+   "no": 38,
+   "id": "animal-quiz",
+   "title": "Animal Quiz",
+   "cat": "animal",
+   "mech": "quiz",
+   "p": {
+    "topic": "animal",
+    "count": 5,
+    "lives": 3,
+    "time": 240
+   },
+   "pitch": "Pertanyaan berdasarkan hewan yang benar-benar ada di dunia ini."
+  },
+  {
+   "no": 39,
+   "id": "animal-photography",
+   "title": "Animal Photography",
+   "cat": "animal",
+   "mech": "photo",
+   "p": {
+    "filter": "animal",
+    "count": 4,
+    "time": 240
+   },
+   "pitch": "Bidik setiap hewan di tengah bingkai dan tekan P."
+  },
+  {
+   "no": 40,
+   "id": "wildlife-adventure",
+   "title": "Wildlife Adventure",
+   "cat": "animal",
+   "mech": "gauntlet",
+   "p": {
+    "stages": [
+     "animal-tracking",
+     "animal-feeding-challenge",
+     "animal-photography"
+    ]
+   },
+   "pitch": "Petualangan satwa tiga babak."
+  },
+  {
+   "no": 41,
+   "id": "obstacle-runner",
+   "title": "Obstacle Runner",
+   "cat": "action",
+   "mech": "race",
+   "p": {
+    "count": 8,
+    "time": 120,
+    "hazards": 6
+   },
+   "pitch": "Delapan gerbang, enam bola rintangan yang memburu."
+  },
+  {
+   "no": 42,
+   "id": "survival-arena",
+   "title": "Survival Arena",
+   "cat": "action",
+   "mech": "dodge",
+   "p": {
+    "time": 60,
+    "count": 8,
+    "speed": 4,
+    "lives": 3
+   },
+   "pitch": "Bertahan 60 detik dari pemburu cahaya."
+  },
+  {
+   "no": 43,
+   "id": "platform-challenge",
+   "title": "Platform Challenge",
+   "cat": "action",
+   "mech": "platform",
+   "p": {
+    "height": 18,
+    "time": 180
+   },
+   "pitch": "Lompat dari platform ke platform sampai suar di puncak."
+  },
+  {
+   "no": 44,
+   "id": "speed-run",
+   "title": "Speed Run",
+   "cat": "action",
+   "mech": "race",
+   "p": {
+    "count": 10,
+    "time": 100
+   },
+   "pitch": "Sepuluh gerbang, seratus detik."
+  },
+  {
+   "no": 45,
+   "id": "dodge-challenge",
+   "title": "Dodge Challenge",
+   "cat": "action",
+   "mech": "dodge",
+   "p": {
+    "time": 45,
+    "count": 12,
+    "speed": 5.5,
+    "lives": 3,
+    "mode": "bounce"
+   },
+   "pitch": "Dua belas bola memantul. Bertahan 45 detik."
+  },
+  {
+   "no": 46,
+   "id": "target-practice",
+   "title": "Target Practice",
+   "cat": "action",
+   "mech": "targets",
+   "p": {
+    "count": 15,
+    "time": 90,
+    "life": 3.5,
+    "misses": 8
+   },
+   "pitch": "Tembak 15 target sebelum menghilang."
+  },
+  {
+   "no": 47,
+   "id": "time-attack",
+   "title": "Time Attack",
+   "cat": "action",
+   "mech": "collect",
+   "p": {
+    "count": 10,
+    "time": 60
+   },
+   "pitch": "Sepuluh kristal dalam 60 detik."
+  },
+  {
+   "no": 48,
+   "id": "escape-room",
+   "title": "Escape Room",
+   "cat": "action",
+   "mech": "collect",
+   "p": {
+    "count": 3,
+    "time": 240,
+    "hidden": true,
+    "interior": true,
+    "exit": true
+   },
+   "pitch": "Cari tiga kunci tersembunyi lalu kabur lewat portal."
+  },
+  {
+   "no": 49,
+   "id": "collect-and-survive",
+   "title": "Collect and Survive",
+   "cat": "action",
+   "mech": "collect",
+   "p": {
+    "count": 10,
+    "time": 150,
+    "hazards": 6
+   },
+   "pitch": "Kumpulkan kristal sambil menghindari pemburu."
+  },
+  {
+   "no": 50,
+   "id": "ultimate-action-challenge",
+   "title": "Ultimate Action Challenge",
+   "cat": "action",
+   "mech": "gauntlet",
+   "p": {
+    "stages": [
+     "survival-arena",
+     "platform-challenge",
+     "target-practice"
+    ]
+   },
+   "pitch": "Tiga ujian refleks berturut-turut."
+  },
+  {
+   "no": 51,
+   "id": "interior-designer",
+   "title": "Interior Designer",
+   "cat": "creative",
+   "mech": "arrange",
+   "p": {
+    "mode": "fengshui",
+    "count": 4,
+    "time": 300
+   },
+   "pitch": "Tata perabot. Skor dinilai dari prinsip Form School: posisi komando, jalur, pusat lapang."
+  },
+  {
+   "no": 52,
+   "id": "object-placement",
+   "title": "Object Placement",
+   "cat": "creative",
+   "mech": "arrange",
+   "p": {
+    "mode": "zones",
+    "count": 5,
+    "time": 240
+   },
+   "pitch": "Letakkan lima objek ke zonanya masing-masing."
+  },
+  {
+   "no": 53,
+   "id": "world-builder",
+   "title": "World Builder",
+   "cat": "creative",
+   "mech": "arrange",
+   "p": {
+    "mode": "tower",
+    "count": 12,
+    "goal": 6,
+    "time": 240
+   },
+   "pitch": "Tumpuk balok sampai menara setinggi 6 meter."
+  },
+  {
+   "no": 54,
+   "id": "color-studio",
+   "title": "Color Studio",
+   "cat": "creative",
+   "mech": "studio",
+   "p": {
+    "kind": "color",
+    "rounds": 3,
+    "time": 240
+   },
+   "pitch": "Racik warna sampai cocok dengan palet target dari dunia ini."
+  },
+  {
+   "no": 55,
+   "id": "material-designer",
+   "title": "Material Designer",
+   "cat": "creative",
+   "mech": "studio",
+   "p": {
+    "kind": "material",
+    "rounds": 3,
+    "time": 240
+   },
+   "pitch": "Atur roughness dan metalness sampai bola material cocok dengan target."
+  },
+  {
+   "no": 56,
+   "id": "creative-photography",
+   "title": "Creative Photography",
+   "cat": "creative",
+   "mech": "photo",
+   "p": {
+    "filter": "any",
+    "count": 5,
+    "time": 300,
+    "composition": true
+   },
+   "pitch": "Foto lima objek. Nilai tambah untuk komposisi sepertiga."
+  },
+  {
+   "no": 57,
+   "id": "furniture-arrangement",
+   "title": "Furniture Arrangement",
+   "cat": "creative",
+   "mech": "arrange",
+   "p": {
+    "mode": "fengshui",
+    "count": 5,
+    "time": 300,
+    "props": "furniture"
+   },
+   "pitch": "Atur lima perabot dengan prinsip Feng Shui Form School."
+  },
+  {
+   "no": 58,
+   "id": "landscape-creator",
+   "title": "Landscape Creator",
+   "cat": "creative",
+   "mech": "arrange",
+   "p": {
+    "mode": "zones",
+    "count": 6,
+    "time": 240,
+    "props": "trees"
+   },
+   "pitch": "Tanam enam pohon di lahan yang ditandai."
+  },
+  {
+   "no": 59,
+   "id": "lighting-designer",
+   "title": "Lighting Designer",
+   "cat": "creative",
+   "mech": "studio",
+   "p": {
+    "kind": "light",
+    "rounds": 3,
+    "time": 240,
+    "mood": true
+   },
+   "pitch": "Atur matahari dan suhu cahaya sesuai suasana target."
+  },
+  {
+   "no": 60,
+   "id": "master-creator",
+   "title": "Master Creator",
+   "cat": "creative",
+   "mech": "gauntlet",
+   "p": {
+    "stages": [
+     "color-studio",
+     "material-designer",
+     "world-builder"
+    ]
+   },
+   "pitch": "Tiga tantangan kreatif berturut-turut."
+  },
+  {
+   "no": 61,
+   "id": "architecture-explorer",
+   "title": "Architecture Explorer",
+   "cat": "education",
+   "mech": "quiz",
+   "p": {
+    "topic": "architecture",
+    "count": 5,
+    "lives": 3,
+    "time": 240
+   },
+   "pitch": "Pertanyaan tentang pintu, jendela, dan struktur dunia ini."
+  },
+  {
+   "no": 62,
+   "id": "object-knowledge",
+   "title": "Object Knowledge",
+   "cat": "education",
+   "mech": "quiz",
+   "p": {
+    "topic": "category",
+    "count": 6,
+    "lives": 3,
+    "time": 240
+   },
+   "pitch": "Tebak kategori objek-objek di dunia ini."
+  },
+  {
+   "no": 63,
+   "id": "material-science",
+   "title": "Material Science",
+   "cat": "education",
+   "mech": "quiz",
+   "p": {
+    "topic": "material",
+    "count": 5,
+    "lives": 3,
+    "time": 240
+   },
+   "pitch": "Objek ini memakai material apa?"
+  },
+  {
+   "no": 64,
+   "id": "geometry-challenge",
+   "title": "Geometry Challenge",
+   "cat": "education",
+   "mech": "quiz",
+   "p": {
+    "topic": "geometry",
+    "count": 6,
+    "lives": 3,
+    "time": 240
+   },
+   "pitch": "Bandingkan tinggi, lebar, dan jarak objek."
+  },
+  {
+   "no": 65,
+   "id": "nature-knowledge",
+   "title": "Nature Knowledge",
+   "cat": "education",
+   "mech": "quiz",
+   "p": {
+    "topic": "nature",
+    "count": 5,
+    "lives": 3,
+    "time": 240
+   },
+   "pitch": "Tanaman, air, dan hewan yang ada di dunia ini."
+  },
+  {
+   "no": 66,
+   "id": "spatial-awareness",
+   "title": "Spatial Awareness",
+   "cat": "education",
+   "mech": "quiz",
+   "p": {
+    "topic": "spatial",
+    "count": 6,
+    "lives": 3,
+    "time": 240
+   },
+   "pitch": "Mana yang paling tinggi, paling dekat, paling jauh?"
+  },
+  {
+   "no": 67,
+   "id": "history-explorer",
+   "title": "History Explorer",
+   "cat": "education",
+   "mech": "quiz",
+   "p": {
+    "topic": "project",
+    "count": 5,
+    "lives": 3,
+    "time": 240
+   },
+   "pitch": "Riwayat pembuatan dunia ini: versi Blender, koleksi, dan aset."
+  },
+  {
+   "no": 68,
+   "id": "environment-quiz",
+   "title": "Environment Quiz",
+   "cat": "education",
+   "mech": "quiz",
+   "p": {
+    "topic": "environment",
+    "count": 5,
+    "lives": 3,
+    "time": 240
+   },
+   "pitch": "Cahaya, langit, dan lingkungan dunia ini."
+  },
+  {
+   "no": 69,
+   "id": "design-intelligence",
+   "title": "Design Intelligence",
+   "cat": "education",
+   "mech": "quiz",
+   "p": {
+    "topic": "fengshui",
+    "count": 5,
+    "lives": 3,
+    "time": 240
+   },
+   "pitch": "Pertanyaan dari analisis Feng Shui dunia ini (kerangka tradisional)."
+  },
+  {
+   "no": 70,
+   "id": "knowledge-master",
+   "title": "Knowledge Master",
+   "cat": "education",
+   "mech": "quiz",
+   "p": {
+    "topic": "mixed",
+    "count": 10,
+    "lives": 2,
+    "time": 360
+   },
+   "pitch": "Sepuluh pertanyaan campuran, hanya dua nyawa."
+  },
+  {
+   "no": 71,
+   "id": "lost-in-the-world",
+   "title": "Lost in the World",
+   "cat": "adventure",
+   "mech": "hideseek",
+   "p": {
+    "target": "beacon",
+    "time": 150
+   },
+   "pitch": "Suar pulang ada di suatu tempat. Hanya ada indikator panas-dingin."
+  },
+  {
+   "no": 72,
+   "id": "ancient-mystery",
+   "title": "Ancient Mystery",
+   "cat": "adventure",
+   "mech": "collect",
+   "p": {
+    "count": 4,
+    "time": 240,
+    "hidden": true,
+    "ordered": true
+   },
+   "pitch": "Empat rune kuno, harus berurutan dan tersembunyi."
+  },
+  {
+   "no": 73,
+   "id": "secret-mission",
+   "title": "Secret Mission",
+   "cat": "adventure",
+   "mech": "find",
+   "p": {
+    "count": 3,
+    "time": 180,
+    "clue": "material",
+    "penalty": 20
+   },
+   "pitch": "Target dikenali dari materialnya. Salah tunjuk memotong 20 detik."
+  },
+  {
+   "no": 74,
+   "id": "treasure-expedition",
+   "title": "Treasure Expedition",
+   "cat": "adventure",
+   "mech": "collect",
+   "p": {
+    "count": 5,
+    "time": 300,
+    "exit": true
+   },
+   "pitch": "Lima harta, lalu kembali lewat portal."
+  },
+  {
+   "no": 75,
+   "id": "lost-civilization",
+   "title": "Lost Civilization",
+   "cat": "adventure",
+   "mech": "maze",
+   "p": {
+    "size": 9,
+    "levels": 1,
+    "time": 180
+   },
+   "pitch": "Labirin kota kuno muncul di samping dunia. Temukan pintu keluar."
+  },
+  {
+   "no": 76,
+   "id": "the-hidden-kingdom",
+   "title": "The Hidden Kingdom",
+   "cat": "adventure",
+   "mech": "collect",
+   "p": {
+    "count": 5,
+    "time": 300,
+    "hidden": true,
+    "interior": true
+   },
+   "pitch": "Lima mahkota tersembunyi di ruang-ruang beratap."
+  },
+  {
+   "no": 77,
+   "id": "rescue-mission",
+   "title": "Rescue Mission",
+   "cat": "adventure",
+   "mech": "rescue",
+   "p": {
+    "target": "any",
+    "count": 2,
+    "time": 260
+   },
+   "pitch": "Dua penghuni dunia tersesat. Bawa mereka pulang."
+  },
+  {
+   "no": 78,
+   "id": "the-great-journey",
+   "title": "The Great Journey",
+   "cat": "adventure",
+   "mech": "race",
+   "p": {
+    "count": 8,
+    "time": 300,
+    "anchor": "landmark"
+   },
+   "pitch": "Perjalanan melintasi delapan landmark."
+  },
+  {
+   "no": 79,
+   "id": "mystery-adventure",
+   "title": "Mystery Adventure",
+   "cat": "adventure",
+   "mech": "hideseek",
+   "p": {
+    "target": "beacon",
+    "time": 120,
+    "dark": true
+   },
+   "pitch": "Dunia meredup. Temukan suar dengan indikator panas-dingin."
+  },
+  {
+   "no": 80,
+   "id": "ultimate-world-adventure",
+   "title": "Ultimate World Adventure",
+   "cat": "adventure",
+   "mech": "gauntlet",
+   "p": {
+    "stages": [
+     "treasure-expedition",
+     "lost-civilization",
+     "rescue-mission"
+    ]
+   },
+   "pitch": "Petualangan agung tiga babak."
+  },
+  {
+   "no": 81,
+   "id": "multiplayer-treasure-hunt",
+   "title": "Multiplayer Treasure Hunt",
+   "cat": "social",
+   "mech": "hotseat",
+   "p": {
+    "players": 2,
+    "inner": {
+     "mech": "collect",
+     "p": {
+      "count": 8,
+      "time": 90
+     }
+    }
+   },
+   "pitch": "Dua pemain bergantian di perangkat yang sama. Skor tertinggi menang."
+  },
+  {
+   "no": 82,
+   "id": "time-trial-competition",
+   "title": "Time Trial Competition",
+   "cat": "social",
+   "mech": "hotseat",
+   "p": {
+    "players": 2,
+    "inner": {
+     "mech": "race",
+     "p": {
+      "count": 6,
+      "time": 90
+     }
+    }
+   },
+   "pitch": "Adu waktu tempuh enam gerbang, bergantian."
+  },
+  {
+   "no": 83,
+   "id": "object-race",
+   "title": "Object Race",
+   "cat": "social",
+   "mech": "hotseat",
+   "p": {
+    "players": 2,
+    "inner": {
+     "mech": "find",
+     "p": {
+      "count": 4,
+      "time": 120,
+      "clue": "name"
+     }
+    }
+   },
+   "pitch": "Adu cepat menemukan objek, bergantian."
+  },
+  {
+   "no": 84,
+   "id": "knowledge-battle",
+   "title": "Knowledge Battle",
+   "cat": "social",
+   "mech": "hotseat",
+   "p": {
+    "players": 2,
+    "inner": {
+     "mech": "quiz",
+     "p": {
+      "topic": "mixed",
+      "count": 6,
+      "lives": 3,
+      "time": 180
+     }
+    }
+   },
+   "pitch": "Duel kuis dua pemain, bergantian."
+  },
+  {
+   "no": 85,
+   "id": "photo-challenge",
+   "title": "Photo Challenge",
+   "cat": "social",
+   "mech": "hotseat",
+   "p": {
+    "players": 2,
+    "inner": {
+     "mech": "photo",
+     "p": {
+      "filter": "any",
+      "count": 3,
+      "time": 150,
+      "composition": true
+     }
+    }
+   },
+   "pitch": "Adu foto terbaik, bergantian."
+  },
+  {
+   "no": 86,
+   "id": "explorer-competition",
+   "title": "Explorer Competition",
+   "cat": "social",
+   "mech": "hotseat",
+   "p": {
+    "players": 2,
+    "inner": {
+     "mech": "collect",
+     "p": {
+      "count": 8,
+      "time": 150,
+      "hidden": true
+     }
+    }
+   },
+   "pitch": "Adu menemukan harta tersembunyi, bergantian."
+  },
+  {
+   "no": 87,
+   "id": "puzzle-duel",
+   "title": "Puzzle Duel",
+   "cat": "social",
+   "mech": "hotseat",
+   "p": {
+    "players": 2,
+    "inner": {
+     "mech": "logic",
+     "p": {
+      "kind": "lightsout",
+      "size": 4,
+      "time": 180
+     }
+    }
+   },
+   "pitch": "Teka-teki yang sama, siapa paling cepat."
+  },
+  {
+   "no": 88,
+   "id": "creative-competition",
+   "title": "Creative Competition",
+   "cat": "social",
+   "mech": "hotseat",
+   "p": {
+    "players": 2,
+    "inner": {
+     "mech": "studio",
+     "p": {
+      "kind": "color",
+      "rounds": 2,
+      "time": 180
+     }
+    }
+   },
+   "pitch": "Adu ketepatan meracik warna."
+  },
+  {
+   "no": 89,
+   "id": "daily-challenge",
+   "title": "Daily Challenge",
+   "cat": "social",
+   "mech": "gauntlet",
+   "p": {
+    "random": 3,
+    "daily": true
+   },
+   "pitch": "Tiga tantangan yang sama untuk semua orang hari ini (seed tanggal)."
+  },
+  {
+   "no": 90,
+   "id": "world-champion",
+   "title": "World Champion",
+   "cat": "social",
+   "mech": "gauntlet",
+   "p": {
+    "random": 5
+   },
+   "pitch": "Lima tantangan acak untuk gelar juara dunia."
+  },
+  {
+   "no": 91,
+   "id": "random-world-challenge",
+   "title": "Random World Challenge",
+   "cat": "special",
+   "mech": "gauntlet",
+   "p": {
+    "random": 1
+   },
+   "pitch": "Satu tantangan acak dari 80 game dasar."
+  },
+  {
+   "no": 92,
+   "id": "infinite-maze",
+   "title": "Infinite Maze",
+   "cat": "special",
+   "mech": "maze",
+   "p": {
+    "size": 7,
+    "levels": 5,
+    "time": 300
+   },
+   "pitch": "Setiap pintu keluar membuka labirin yang lebih besar. Lima lapis."
+  },
+  {
+   "no": 93,
+   "id": "dream-simulator",
+   "title": "Dream Simulator",
+   "cat": "special",
+   "mech": "platform",
+   "p": {
+    "height": 24,
+    "time": 200,
+    "gravity": 0.35,
+    "dreamy": true
+   },
+   "pitch": "Gravitasi seperti mimpi. Melayang ke puncak."
+  },
+  {
+   "no": 94,
+   "id": "gravity-challenge",
+   "title": "Gravity Challenge",
+   "cat": "special",
+   "mech": "platform",
+   "p": {
+    "height": 16,
+    "time": 180,
+    "gravityCycle": true
+   },
+   "pitch": "Gravitasi berganti ringan dan berat setiap 6 detik."
+  },
+  {
+   "no": 95,
+   "id": "time-manipulation",
+   "title": "Time Manipulation",
+   "cat": "special",
+   "mech": "collect",
+   "p": {
+    "count": 10,
+    "time": 150,
+    "hazards": 8,
+    "slowmo": true
+   },
+   "pitch": "Tahan Q untuk memperlambat pemburu. Energi terbatas."
+  },
+  {
+   "no": 96,
+   "id": "mini-world-survival",
+   "title": "Mini World Survival",
+   "cat": "special",
+   "mech": "dodge",
+   "p": {
+    "time": 90,
+    "count": 6,
+    "speed": 3.5,
+    "lives": 3,
+    "energy": true
+   },
+   "pitch": "Energi terus berkurang. Ambil sel energi sambil menghindar."
+  },
+  {
+   "no": 97,
+   "id": "secret-dimension",
+   "title": "Secret Dimension",
+   "cat": "special",
+   "mech": "collect",
+   "p": {
+    "count": 6,
+    "time": 240,
+    "hidden": true,
+    "dimension": true
+   },
+   "pitch": "Dunia berubah warna. Temukan enam gerbang dimensi."
+  },
+  {
+   "no": 98,
+   "id": "ultimate-random-quest",
+   "title": "Ultimate Random Quest",
+   "cat": "special",
+   "mech": "gauntlet",
+   "p": {
+    "random": 4
+   },
+   "pitch": "Empat tantangan acak dengan seed yang bisa diulang."
+  },
+  {
+   "no": 99,
+   "id": "master-of-the-world",
+   "title": "Master of the World",
+   "cat": "special",
+   "mech": "gauntlet",
+   "p": {
+    "random": 4,
+    "categories": [
+     "exploration",
+     "puzzle",
+     "action",
+     "education"
+    ]
+   },
+   "pitch": "Satu tantangan dari empat kategori berbeda."
+  },
+  {
+   "no": 100,
+   "id": "the-100-dreams-challenge",
+   "title": "The 100 Dreams Challenge",
+   "cat": "special",
+   "mech": "gauntlet",
+   "p": {
+    "random": 5,
+    "distinct": true
+   },
+   "pitch": "Lima tantangan dari lima kategori berbeda. Ujian terakhir."
+  }
+ ]
+}

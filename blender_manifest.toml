@@ -1,0 +1,15 @@
+schema_version = "1.0.0"
+id = "hundred_dreams"
+version = "1.0.0"
+name = "100 DREAMS"
+tagline = "One click turns a Blender scene into an interactive HTML world"
+maintainer = "100 DREAMS"
+type = "add-on"
+blender_version_min = "4.2.0"
+license = ["SPDX:GPL-3.0-or-later"]
+category = "Import-Export"
+tags = ["Import-Export", "3D View"]
+
+[permissions]
+files = "Reads the Blender project and writes the generated website to the chosen folder"
+network = "Serves the generated world on 127.0.0.1 so the browser can open multi-file packages"
