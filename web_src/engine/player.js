@@ -16,7 +16,7 @@ export class Input {
       if (e.target.closest?.('input,textarea,select')) return;
       if (!this.keys.has(e.code)) this.pressed.add(e.code);
       this.keys.add(e.code);
-      if (e.code === 'Space') e.preventDefault();
+      if (e.code === 'Space' || e.code === 'ArrowLeft' || e.code === 'ArrowRight' || e.code === 'ArrowUp' || e.code === 'ArrowDown') e.preventDefault();
     });
     addEventListener('keyup', (e) => this.keys.delete(e.code));
     addEventListener('blur', () => this.keys.clear());
@@ -123,6 +123,10 @@ export class Player {
 
   update(dt, input) {
     const look = input.look;
+    if (this.mode !== 'orbit' && this.mode !== 'cinematic' && input.enabled) {
+      const arrowYaw = ((input.down('ArrowRight') ? 1 : 0) - (input.down('ArrowLeft') ? 1 : 0)) * 1.8 * dt;
+      if (arrowYaw) { this.yaw -= arrowYaw; }
+    }
     if (this.mode !== 'orbit' && this.mode !== 'cinematic') {
       this.yaw -= look.x * 0.0022; this.pitch = clamp(this.pitch - look.y * 0.0022, -1.45, 1.45);
       if (input.down('KeyQ') && this.mode === 'free') this.pos.y -= 6 * dt;
