@@ -1,0 +1,343 @@
+/* 3D Building Explorer - Multi-floor navigation */
+
+.building-explorer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Floor Stack - Vertical building visualization */
+.floor-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.floor-stack-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: inherit;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.floor-stack-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 150, 100, 0.5);
+  transform: translateX(4px);
+}
+
+.floor-stack-btn[aria-selected="true"] {
+  background: rgba(255, 150, 100, 0.3);
+  border-color: rgba(255, 150, 100, 0.8);
+  font-weight: 600;
+}
+
+.floor-label {
+  font-weight: 600;
+  min-width: 50px;
+}
+
+.floor-height {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-left: auto;
+}
+
+.room-badges {
+  display: flex;
+  gap: 2px;
+  margin-left: 0.5rem;
+}
+
+.badge {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 150, 100, 0.8);
+  border-radius: 50%;
+}
+
+/* Floor Content Area */
+.floor-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.floor-content h3 {
+  margin: 0;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Floor View Tabs */
+.floor-view-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: inherit;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.tab-btn.active {
+  background: rgba(255, 150, 100, 0.3);
+  border-color: rgba(255, 150, 100, 0.8);
+  font-weight: 600;
+}
+
+/* Isometric Canvas */
+.floor-isometric {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  background: #15183a;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  image-rendering: crisp-edges;
+  margin: 0 auto;
+}
+
+/* Room Grid */
+.room-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.6rem;
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.room-grid.empty {
+  padding: 1rem;
+  text-align: center;
+}
+
+.grid-card {
+  list-style: none;
+}
+
+.grid-btn {
+  display: block;
+  width: 100%;
+  padding: 0.7rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  border-left: 4px solid;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.grid-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateX(2px);
+}
+
+.grid-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+}
+
+.grid-distance {
+  font-size: 0.8rem;
+  color: rgba(255, 150, 100, 0.8);
+  margin-bottom: 0.2rem;
+}
+
+.grid-objects {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Floor Block (vertical stack view) */
+.floor-block {
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+}
+
+.floor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.floor-header strong {
+  font-size: 0.95rem;
+}
+
+.room-count {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.rooms-in-floor {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.4rem;
+}
+
+.room-mini-card {
+  list-style: none;
+}
+
+.room-mini-btn {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.8rem;
+  transition: all 0.15s ease;
+}
+
+.room-mini-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(2px);
+}
+
+.mini-name {
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.mini-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.3rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.7rem;
+}
+
+.distance {
+  color: rgba(255, 150, 100, 0.7);
+}
+
+.objects {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 60%;
+}
+
+/* Building Profile View */
+.building-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.building-profile.empty {
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .floor-stack {
+    max-height: 200px;
+  }
+
+  .room-grid {
+    grid-template-columns: 1fr;
+    max-height: 300px;
+  }
+
+  .tab-btn {
+    padding: 0.4rem;
+    font-size: 0.8rem;
+  }
+
+  .floor-isometric {
+    max-width: 100%;
+  }
+
+  .grid-btn {
+    padding: 0.6rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .room-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .building-profile {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
+/* Scrollbar styling */
+.floor-stack::-webkit-scrollbar,
+.room-grid::-webkit-scrollbar,
+.building-profile::-webkit-scrollbar {
+  width: 6px;
+}
+
+.floor-stack::-webkit-scrollbar-track,
+.room-grid::-webkit-scrollbar-track,
+.building-profile::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.floor-stack::-webkit-scrollbar-thumb,
+.room-grid::-webkit-scrollbar-thumb,
+.building-profile::-webkit-scrollbar-thumb {
+  background: rgba(255, 150, 100, 0.3);
+  border-radius: 3px;
+}
+
+.floor-stack::-webkit-scrollbar-thumb:hover,
+.room-grid::-webkit-scrollbar-thumb:hover,
+.building-profile::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 150, 100, 0.6);
+}
