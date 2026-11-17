@@ -272,7 +272,16 @@ export class World {
 
   spawnPoint(data) {
     const named = [...this.byName.values()].find((n) => /^(spawn|playerstart|player_start|start)$/i.test(n.name));
-    if (named) { const p = named.getWorldPosition(new THREE.Vector3()); const h = this.castDown(p.x, p.z, p.y + 1.5, 50); return h ? h.point : p; }
+    if (named) {
+      const p = named.getWorldPosition(new THREE.Vector3());
+      const h = this.castDown(p.x, p.z, p.y + 1.5, 50);
+      // Only trust the marker if it sits on a walkable surface; a marker in mid-air
+      // or inside geometry would drop the player straight through the world.
+      if (h && h.face) {
+        const n = h.face.normal.clone().transformDirection(h.object.matrixWorld);
+        if (n.y > 0.5) return h.point;
+      }
+    }
     // focus on the main structure, not the whole landscape
     const core = new THREE.Box3();
     for (const m of data.objects || []) {

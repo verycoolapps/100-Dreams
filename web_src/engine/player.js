@@ -94,7 +94,25 @@ export class Player {
     return g;
   }
 
-  place(p, yaw) { this.pos.copy(p); this.vel.set(0, 0, 0); if (yaw != null) this.yaw = yaw; }
+  // Highest walkable surface at (x,z) at or below fromY. Skips ceilings, walls and
+  // other near-vertical faces so roofs never count as floor.
+  groundBelow(x, z, fromY, maxDrop = 400) {
+    const w = this.app.world;
+    const hit = w.castDown(x, z, fromY, Math.min(maxDrop, Math.max(50, w.size.y + 20)));
+    if (!hit || !hit.face) return null;
+    const n = hit.face.normal.clone().transformDirection(hit.object.matrixWorld);
+    return n.y > 0.5 ? hit.point.y : null;
+  }
+
+  place(p, yaw) {
+    this.pos.copy(p); this.vel.set(0, 0, 0);
+    if (yaw != null) this.yaw = yaw;
+    // Snap onto the nearest walkable ground so teleports/map clicks never start
+    // inside geometry or leave the player falling for a frame.
+    const g = this.groundBelow(this.pos.x, this.pos.z, this.pos.y + this.step + 0.6, 30);
+    if (g != null && this.pos.y - g < 2.5) { this.pos.y = g; this.onGround = true; }
+    else this.onGround = false;
+  }
 
   lookAt(target) {
     const d = target.clone().sub(this.pos);
@@ -197,13 +215,24 @@ export class Player {
 
   moveVertical(dt) {
     const w = this.app.world, extra = this.app.extraColliders;
+    // Cast from just above the step height. Accept only upward-facing surfaces as
+    // ground, and never accept a surface above the player's feet — otherwise a roof
+    // or ceiling on a lower level reads as "ground" and the player falls through.
     const origin = this.pos.clone(); origin.y += this.step + 0.4;
-    const down = w.raycast(origin, new THREE.Vector3(0, -1, 0), 50, extra);
-    const groundY = down ? down.point.y : -Infinity;
+    const down = w.raycast(origin, new THREE.Vector3(0, -1, 0), Math.max(50, w.size.y + 20), extra);
+    let groundY = -Infinity, groundObj = null;
+    if (down && down.face) {
+      const n = down.face.normal.clone().transformDirection(down.object.matrixWorld);
+      if (n.y > 0.5 && down.point.y <= this.pos.y + this.step + 0.05) { groundY = down.point.y; groundObj = down.object; }
+    }
     const next = this.pos.y + this.vel.y * dt;
-    if (this.vel.y <= 0 && next <= groundY + 0.001) { this.pos.y = groundY; this.vel.y = 0; this.onGround = true; this.groundObject = down.object; }
-    else if (this.vel.y <= 0 && this.onGround && this.pos.y - groundY < this.step && this.pos.y - groundY > 0) { this.pos.y = groundY; this.vel.y = 0; }
-    else {
+    const skin = 0.001;
+    if (this.vel.y <= 0 && next <= groundY + skin) {
+      this.pos.y = groundY; this.vel.y = 0; this.onGround = true; this.groundObject = groundObj;
+    } else if (this.vel.y <= 0 && this.onGround && groundY > -Infinity && this.pos.y - groundY < this.step && this.pos.y - groundY > -0.05) {
+      // Still standing on the same level: stick to it instead of accumulating fall.
+      this.pos.y = groundY; this.vel.y = 0;
+    } else {
       if (this.vel.y > 0) {
         const head = this.pos.clone(); head.y += this.height - 0.1;
         const up = w.raycast(head, UP, this.vel.y * dt + 0.15, extra);

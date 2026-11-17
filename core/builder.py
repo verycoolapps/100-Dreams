@@ -43,7 +43,7 @@ def choose_mode(requested, glb_size, env_size):
     return "single" if glb_size + env_size <= SINGLE_LIMIT else "package"
 
 
-def build(stage_dir, data, glb_path, env_file, mode, preset):
+def build(stage_dir, data, glb_path, env_file, mode, preset, renders=None, work_dir=None):
     """Assemble the website into stage_dir. Returns the index.html path."""
     template = _read("template.html")
     css = _read("style.css")
@@ -53,6 +53,28 @@ def build(stage_dir, data, glb_path, env_file, mode, preset):
     data["exportedAt"] = datetime.datetime.now().isoformat(timespec="seconds")
     data["generator"] = f"100 DREAMS {VERSION}"
     glb_b64 = env_b64 = ""
+    # Blender stills (Eevee/Cycles) — package mode copies them, single-file embeds
+    # small ones as data URLs so index.html stays self-contained.
+    if renders:
+        kept = []
+        for r in renders:
+            src = os.path.join(work_dir, r["file"]) if work_dir else None
+            if not src or not os.path.isfile(src):
+                continue
+            size = os.path.getsize(src)
+            if mode == "single":
+                if size > 6 * 1024 * 1024:
+                    continue
+                with open(src, "rb") as f:
+                    r["dataUrl"] = "data:image/png;base64," + base64.b64encode(f.read()).decode("ascii")
+                kept.append(r)
+            else:
+                rdir = os.path.join(stage_dir, "assets", "renders")
+                os.makedirs(rdir, exist_ok=True)
+                shutil.copyfile(src, os.path.join(rdir, os.path.basename(r["file"])))
+                r["url"] = f"assets/renders/{os.path.basename(r['file'])}"
+                kept.append(r)
+        data["renders"] = kept
     os.makedirs(os.path.join(stage_dir, "data"), exist_ok=True)
     if mode == "single":
         with open(glb_path, "rb") as f:

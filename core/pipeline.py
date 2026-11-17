@@ -7,7 +7,7 @@ import time
 
 import bpy
 
-from . import analyzer, builder, exporter, fengshui, validator
+from . import analyzer, builder, exporter, fengshui, render_stills, validator
 
 STAGES = ["Analyzing World", "Preparing Assets", "Building Materials", "Processing Animations", "Constructing World Engine",
           "Creating 100 Games", "Building HTML", "Validating Experience", "Finalizing Website"]
@@ -62,6 +62,14 @@ def run(context, settings):
         if not env:
             data["environment"]["hdri"] = None
 
+        renders = []
+        try:
+            renders = render_stills.render_stills(work, settings)
+        except Exception as e:
+            print(f"[100 DREAMS] render stills dilewati: {e}")
+        if renders:
+            data["renders"] = renders
+
         yield 5, STAGES[5], "Mendaftarkan 100 game"
         games_path = os.path.join(builder.WEB, "games.json")
         with open(games_path, encoding="utf-8") as f:
@@ -73,7 +81,7 @@ def run(context, settings):
         mode = builder.choose_mode(settings.get("output_mode", "AUTO"), glb_size, env[1] if env else 0)
         stage = os.path.join(work, "site")
         os.makedirs(stage)
-        index = builder.build(stage, data, glb, env_path, mode, settings.get("preset", "cinematic"))
+        index = builder.build(stage, data, glb, env_path, mode, settings.get("preset", "cinematic"), renders, work)
 
         yield 7, STAGES[7], "Memeriksa hasil"
         result = validator.validate(stage, data, glb, mode, games_path, notes)

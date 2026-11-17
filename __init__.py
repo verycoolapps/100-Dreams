@@ -52,6 +52,7 @@ class DreamsScene(bpy.types.PropertyGroup):
     preset: EnumProperty(name="Preset grafis awal", items=PRESET_ITEMS, default="cinematic")
     webp: BoolProperty(name="Kompres tekstur ke WebP", default=False, description="File lebih kecil; kualitas 90")
     include_hdri: BoolProperty(name="Bawa HDRI dunia", default=True)
+    render_quality: EnumProperty(name="Render still", items=[("eevee", "Eevee (cepat)", "Render still EEVEE untuk pratinjau di web"), ("cycles", "Cycles (bagus, lambat)", "Render still Cycles CPU berkualitas lebih tinggi"), ("off", "Mati", "Tanpa render still")], default="eevee")
     north_known: BoolProperty(name="Arah utara diketahui", default=False, description="Aktifkan Compass School Feng Shui")
     north_angle: FloatProperty(name="Utara (°)", description="Arah utara sejati, searah jarum jam dari sumbu +Y Blender", min=0, max=360, default=0)
     open_when_done: BoolProperty(name="Buka otomatis saat selesai", default=True)
@@ -70,7 +71,8 @@ class DreamsScene(bpy.types.PropertyGroup):
 
 def settings_of(s):
     return {"project_name": s.project_name.strip(), "output_dir": s.output_dir, "output_mode": s.output_mode, "preset": s.preset,
-            "webp": s.webp, "include_hdri": s.include_hdri, "north_known": s.north_known, "north_angle": s.north_angle}
+            "webp": s.webp, "include_hdri": s.include_hdri, "north_known": s.north_known, "north_angle": s.north_angle,
+            "render_quality": s.render_quality}
 
 
 class DREAMS_OT_generate(bpy.types.Operator):
@@ -293,6 +295,7 @@ class DREAMS_PT_advanced(bpy.types.Panel):
         s = context.scene.dreams
         L = self.layout; L.use_property_split = True
         L.prop(s, "output_dir"); L.prop(s, "output_mode"); L.prop(s, "preset"); L.prop(s, "webp"); L.prop(s, "include_hdri"); L.prop(s, "open_when_done")
+        L.prop(s, "render_quality")
         L.separator(); L.label(text="Feng Shui")
         L.prop(s, "north_known")
         r = L.row(); r.enabled = s.north_known; r.prop(s, "north_angle")

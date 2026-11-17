@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { el, fmtTime, fmtNum, store, todaySeed, isTouch } from './util.js';
 import { PRESETS, PRESET_ORDER } from './engine/render.js';
 import { DIFFICULTY } from './games/engine.js';
+import { MapView } from './map.js';
 
 const I = {
   explore: 'M12 3l7 4v10l-7 4-7-4V7z M12 3v18 M5 7l7 4 7-4',
@@ -53,13 +54,37 @@ export class UI {
     const chars = (d.objects || []).filter((o) => o.role === 'character').length, animals = (d.objects || []).filter((o) => o.role === 'animal').length;
     const inner = this.load.querySelector('.loader-inner');
     inner.querySelector('.bar').remove(); this.loadText.remove();
+    const renders = (d.renders || []).filter((r) => r.url || r.dataUrl);
     inner.append(
       el('p', { class: 'entry-meta' }, `${s.objects ?? d.objects.length} objek, ${chars} karakter, ${animals} hewan, 100 game`),
       el('div', { class: 'row entry-actions' },
         el('button', { class: 'btn-primary big', type: 'button', onclick: () => onEnter('first') }, 'Masuk ke dunia'),
-        el('button', { class: 'btn', type: 'button', onclick: () => onEnter('orbit') }, 'Lihat dari luar')),
+        el('button', { class: 'btn', type: 'button', onclick: () => onEnter('orbit') }, 'Lihat dari luar'),
+        renders.length ? el('button', { class: 'btn', type: 'button', onclick: () => this.openRenders() }, 'Render Blender') : null),
       el('p', { class: 'muted small' }, `Grafis: ${PRESETS[this.app.renderer.presetName].label}${this.app.renderer.auto ? ' (otomatis menyesuaikan perangkat)' : ''}`));
     inner.querySelector('.btn-primary').focus();
+  }
+
+  // Blender stills rendered by the pipeline (Eevee/Cycles) — shown as previews.
+  renderSrc(r) { return r.dataUrl || r.url; }
+  openRenderModal(r) {
+    this.modal.replaceChildren(el('div', { class: 'modal render-modal', role: 'dialog', 'aria-modal': 'true' },
+      el('h2', {}, r.label || 'Render Blender'),
+      el('img', { src: this.renderSrc(r), alt: r.label || 'Render Blender' }),
+      el('p', { class: 'muted small' }, 'Hasil render dari Blender (bukan tangkapan web). Bandingkan dengan dunia real-time di sebelahnya.'),
+      el('div', { class: 'row' }, el('button', { class: 'btn', type: 'button', onclick: () => { this.modal.replaceChildren(); this.syncLayers(); } }, 'Tutup'))));
+    this.syncLayers();
+    this.modal.querySelector('button').focus();
+  }
+  openRenders() {
+    const renders = (this.app.data.renders || []).filter((r) => r.url || r.dataUrl);
+    if (!renders.length) { this.toast('Tidak ada render Blender di paket ini.'); return; }
+    this.openPanel('Render Blender', [
+      el('p', { class: 'lead' }, 'Pratinjau hasil render dari Blender. Web menampilkan dunia real-time 3D; gambar ini adalah render final dari scene Blender kamu.'),
+      el('div', { class: 'render-grid' }, renders.map((r) => el('button', { type: 'button', class: 'render-thumb', onclick: () => this.openRenderModal(r) },
+        el('img', { src: this.renderSrc(r), alt: r.label, loading: 'lazy' }), el('span', {}, r.label || 'Render')))),
+      el('p', { class: 'muted small' }, 'Ketuk gambar untuk ukuran penuh.'),
+    ], true);
   }
   hideLoader() { this.load.classList.add('gone'); setTimeout(() => this.load.remove(), 900); }
 
@@ -89,11 +114,13 @@ export class UI {
       dockBtn('gear', 'Pengaturan', () => this.openSettings()),
       dockBtn('help', 'Bantuan', () => this.openHelp()),
       dockBtn('full', 'Layar penuh', () => (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.())));
+    this.mapView = new MapView(this);
     this.root.append(this.title, this.crosshair, this.prompt, this.info, this.frame, this.flashEl, this.hudEl, this.gameLayer, this.dock, this.panel, this.modal);
+    this.mapView.start();
     if (isTouch()) { this.touch = app.input.buildTouch(this.root); this.root.classList.add('is-touch'); }
     addEventListener('keydown', (e) => {
       if (e.code === 'Escape' && this.panel.classList.contains('open') && !app.games.active) this.closePanel();
-      if (e.code === 'KeyM' && !e.target.closest('input')) this.openMap();
+      if (e.code === 'KeyM' && !e.target.closest('input')) { if (this.panel.classList.contains('open') && this.mapOpen) this.closePanel(); else this.openMap(); }
       if (e.code === 'KeyG' && !e.target.closest('input')) this.openLibrary();
     });
     this.setMode(app.player.mode, true);
@@ -172,45 +199,17 @@ export class UI {
   // ---------------- panel host ----------------
   openPanel(title, body, wide = false) {
     this.app.releasePointer();
+    this.mapOpen = false;
     this.panel.replaceChildren(el('div', { class: 'panel-head' }, el('h2', { id: 'panel-title' }, title), el('button', { class: 'x', type: 'button', 'aria-label': 'Tutup panel', onclick: () => this.closePanel() }, icon('close'))), el('div', { class: 'panel-body' }, body));
     this.panel.classList.toggle('wide', wide); this.panel.classList.add('open'); this.root.classList.add('panel-open');
     this.panel.querySelector('.x').focus();
   }
-  closePanel() { this.panel.classList.remove('open'); this.root.classList.remove('panel-open'); this.mapLoop = false; }
+  closePanel() { this.panel.classList.remove('open'); this.root.classList.remove('panel-open'); this.mapOpen = false; }
 
   // ---------------- map ----------------
   openMap() {
-    const w = this.app.world, d = this.app.data;
-    const canvas = el('canvas', { class: 'map', width: 720, height: 720, 'aria-label': 'Peta dunia dari atas. Klik untuk berpindah.' });
-    const pad = Math.max(w.size.x, w.size.z) * 0.08 + 2;
-    const minX = w.bounds.min.x - pad, minZ = w.bounds.min.z - pad, span = Math.max(w.size.x, w.size.z) + pad * 2;
-    const toPx = (x, z) => [((x - minX) / span) * 720, ((z - minZ) / span) * 720];
-    const colors = { wall: '#b9b2d6', floor: '#4a456e', building: '#c9c1ea', furniture: '#f2c46d', character: '#ff8fb1', animal: '#7fe0c4', plant: '#8fd48a', door: '#ffffff', water: '#6fa8ff', vehicle: '#ffb37a' };
-    const draw = () => {
-      if (!this.mapLoop) return;
-      const g = canvas.getContext('2d'); g.fillStyle = '#15183a'; g.fillRect(0, 0, 720, 720);
-      const objs = (d.objects || []).slice().sort((a, b) => (a.center[1] - a.dims[1] / 2) - (b.center[1] - b.dims[1] / 2));
-      for (const o of objs) {
-        if (['light', 'camera'].includes(o.role)) continue;
-        const [x, y] = toPx(o.center[0] - o.dims[0] / 2, o.center[2] - o.dims[2] / 2);
-        const sw = (o.dims[0] / span) * 720, sh = (o.dims[2] / span) * 720;
-        g.fillStyle = colors[o.role] || '#8a86b0'; g.globalAlpha = o.role === 'floor' || o.role === 'terrain' ? 0.35 : 0.8;
-        g.fillRect(x, y, Math.max(2, sw), Math.max(2, sh));
-      }
-      g.globalAlpha = 1;
-      for (const a of this.app.actors.of('any')) { const p = a.worldPosition(); const [x, y] = toPx(p.x, p.z); g.fillStyle = a.kind === 'animal' ? '#7fe0c4' : '#ff8fb1'; g.beginPath(); g.arc(x, y, 6, 0, 7); g.fill(); }
-      const p = this.app.player.pos; const [px, py] = toPx(p.x, p.z);
-      g.save(); g.translate(px, py); g.rotate(-this.app.player.yaw); g.fillStyle = '#fff'; g.beginPath(); g.moveTo(0, -13); g.lineTo(8, 9); g.lineTo(0, 4); g.lineTo(-8, 9); g.fill(); g.restore();
-      requestAnimationFrame(draw);
-    };
-    canvas.addEventListener('click', (e) => {
-      const r = canvas.getBoundingClientRect(); const x = minX + ((e.clientX - r.left) / r.width) * span, z = minZ + ((e.clientY - r.top) / r.height) * span;
-      const hit = w.castDown(x, z, w.bounds.max.y + 2, 1e4);
-      if (hit) { if (['orbit', 'cinematic'].includes(this.app.player.mode)) this.setMode('first', true); this.app.player.place(hit.point); this.toast('Berpindah ke titik di peta.'); }
-    });
-    const legend = el('div', { class: 'legend' }, Object.entries({ furniture: 'Perabot', character: 'Karakter', animal: 'Hewan', plant: 'Tanaman', door: 'Pintu', wall: 'Dinding' }).map(([k, v]) => el('span', {}, el('i', { style: { background: colors[k] } }), v)));
-    this.openPanel('Peta dunia', [canvas, legend, el('p', { class: 'muted small' }, 'Klik peta untuk berpindah ke titik itu. Tombol pintas: M.')]);
-    this.mapLoop = true; draw();
+    this.mapView.openFull();
+    this.mapOpen = true;
   }
 
   // ---------------- directories ----------------
@@ -366,11 +365,29 @@ export class UI {
     const els = fs.elements || {};
     const order = [['Kayu', '#7fbf6a'], ['Api', '#ff7a5c'], ['Tanah', '#d9b36a'], ['Logam', '#cfd6e6'], ['Air', '#5c8dff']];
     const pr = { P1: 'Prioritas tinggi', P2: 'Penting', P3: 'Disarankan', P4: 'Penyempurnaan' };
+    const schoolLabel = { compass: 'Compass School · utara sejati', btb: 'BTB (barat) · segaris pintu utama', 'btb-assumed': 'BTB · asumsi pintu di sisi −Y' }[fs.school] || fs.school || '—';
+
+    // ---- 3x3 bagua sector cards ----
+    const cells = fs.grid?.cells || [];
+    const sectors = fs.sectors || [];
+    const baguaGrid = cells.length ? el('div', { class: 'bagua-grid', role: 'grid', 'aria-label': 'Bagua 3x3 per sektor' },
+      cells.map((cell, i) => {
+        const sec = sectors[i] || {};
+        const objs = sec.objects || [];
+        return el('div', { class: 'bagua-cell', role: 'gridcell', style: { borderColor: cell.color } },
+          el('div', { class: 'bc-head' }, el('strong', {}, cell.label), el('span', { class: 'bc-sub' }, cell.sub || cell.element)),
+          el('div', { class: 'bc-el' }, `${cell.element || ''}`),
+          objs.length ? el('ul', { class: 'bc-obj' }, objs.slice(0, 5).map((o) => el('li', {}, o)), objs.length > 5 ? el('li', { class: 'muted' }, `+${objs.length - 5} lainnya`) : null) : el('p', { class: 'muted small' }, 'Kosong'));
+      })) : null;
+
     this.openPanel('Feng Shui', [
       el('p', { class: 'lead' }, fs.summary || 'Analisis belum tersedia.'),
       el('p', { class: 'muted small' }, 'Feng Shui disajikan sebagai kerangka tradisional dan bahan pertimbangan desain, bukan klaim ilmiah atau jaminan hasil. Temuan bertanda “Objektif” adalah faktor lingkungan yang dapat diukur.'),
       ov ? el('button', { class: 'btn', type: 'button', onclick: (e) => { this.app.world.setBaguaVisible(!ov.visible); if (ov.visible) { this.setMode('orbit', true); this.app.player.orbit.target.copy(this.app.world.focus || this.app.world.center); } e.currentTarget.textContent = ov.visible ? 'Sembunyikan peta bagua' : 'Tampilkan peta bagua di lantai'; } }, ov.visible ? 'Sembunyikan peta bagua' : 'Tampilkan peta bagua di lantai') : null,
-      el('h3', {}, 'Metode'), el('p', {}, fs.method || '—'),
+      el('h3', {}, 'Metode'),
+      el('p', {}, fs.method || '—'),
+      el('p', { class: 'muted small' }, `Sistem: ${schoolLabel}${fs.north?.known ? ` · utara ${fs.north.angle}°` : ''}${fs.door ? ` · pintu utama: ${fs.door.name} (sektor ${fs.door.sector})` : ''}${fs.taiqi ? ` · pusat ${fs.taiqi.clear ? 'lapang' : 'terisi'}` : ''}`),
+      baguaGrid ? [el('h3', {}, 'Denah bagua per sektor'), baguaGrid, el('p', { class: 'muted small' }, 'Setiap sektor menampilkan bidang kehidupan, unsurnya, dan objek yang terdeteksi di dalamnya.')] : null,
       el('h3', {}, 'Lima unsur dari material'),
       el('div', { class: 'elements' }, order.map(([k, c]) => el('div', { class: 'el-row' }, el('span', {}, k), el('div', { class: 'el-bar' }, el('i', { style: { width: `${Math.round((els[k] || 0) * 100)}%`, background: c } })), el('span', { class: 'num' }, `${Math.round((els[k] || 0) * 100)}%`)))),
       fs.yinyang ? [el('h3', {}, 'Yin dan Yang'), el('p', {}, `${fs.yinyang.verdict}. ${fs.yinyang.detail}`)] : null,

@@ -148,6 +148,48 @@ kbd { font: 600 12px/1 var(--body); padding: 4px 8px; border-radius: 6px; backgr
 .fp { display: block; font-size: 12px; color: var(--ink-3); margin-bottom: 2px; }
 .findings p { margin: 4px 0 0; color: var(--ink-2); font-size: 14px; }
 
+
+/* minimap + floor navigation */
+.minimap { position: absolute; right: max(var(--s4), env(safe-area-inset-right)); bottom: 104px; width: 172px; height: 172px; border-radius: 18px; overflow: hidden; background: rgba(21, 24, 58, 0.85); box-shadow: 0 14px 40px -14px rgba(0,0,0,0.8); border: 1px solid var(--line); transition: opacity .25s; z-index: 5; }
+.minimap canvas { display: block; width: 100%; height: 100%; }
+.minimap .mm-floor { position: absolute; left: 8px; top: 8px; padding: 3px 9px; border-radius: 999px; background: rgba(10,12,34,0.72); font-size: 11px; font-weight: 600; color: var(--ink); pointer-events: none; }
+.minimap .mm-floor.multi { background: rgba(242,196,109,0.85); color: #2a1d06; }
+.minimap .mm-btns { position: absolute; right: 8px; bottom: 8px; display: flex; gap: 6px; }
+.minimap .mm-open, .minimap .mm-hide { border: 0; border-radius: 999px; padding: 5px 11px; min-height: 0; font-size: 11px; font-weight: 700; background: rgba(10,12,34,0.72); color: var(--ink); cursor: pointer; }
+.minimap .mm-open:hover { background: rgba(185,190,230,0.25); }
+.minimap .mm-hide { padding: 5px 9px; color: var(--ink-3); }
+.minimap .mm-hide:hover { color: var(--ink); }
+.mm-fab { position: absolute; right: max(var(--s4), env(safe-area-inset-right)); bottom: 104px; border: 0; border-radius: 999px; padding: 8px 16px; min-height: 0; font-size: 12px; font-weight: 700; background: var(--glass); color: var(--ink); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.7); }
+@media (max-width: 720px) { .mm-fab { bottom: 96px; right: 8px; } }
+.map-hidden .minimap { display: none; }
+.floorbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: var(--s3); }
+.floorbtn { flex: 1 1 90px; border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; background: rgba(185,190,230,0.08); color: var(--ink); display: grid; gap: 2px; cursor: pointer; text-align: left; }
+.floorbtn strong { font-size: 14px; }
+.floorbtn span { font-size: 11.5px; color: var(--ink-3); }
+.floorbtn[aria-selected='true'] { background: rgba(242,196,109,0.18); border-color: var(--dawn); }
+.floorbtn.follow { flex: 0 1 auto; }
+.map.full { border: 1px solid var(--line); }
+@media (max-width: 720px) { .minimap { width: 132px; height: 132px; bottom: 96px; right: 8px; } }
+
+
+
+/* feng shui bagua grid */
+.bagua-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: var(--s3) 0; }
+.bagua-cell { border: 1px solid var(--line); border-left-width: 4px; border-radius: 10px; padding: 8px 10px; background: rgba(185,190,230,0.06); min-height: 86px; display: flex; flex-direction: column; gap: 3px; }
+.bagua-cell .bc-head { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; }
+.bagua-cell .bc-head strong { font-size: 13.5px; }
+.bagua-cell .bc-sub { font-size: 10.5px; color: var(--ink-3); text-align: right; }
+.bagua-cell .bc-el { font-size: 11px; font-weight: 700; color: var(--dawn); }
+.bagua-cell .bc-obj { list-style: none; padding: 0; margin: 2px 0 0; font-size: 11.5px; color: var(--ink-2); display: grid; gap: 1px; }
+
+/* blender render gallery */
+.render-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--s3); margin: var(--s3) 0; }
+.render-thumb { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: rgba(10,12,34,0.5); padding: 0; display: grid; gap: 0; cursor: zoom-in; }
+.render-thumb img { width: 100%; height: auto; display: block; aspect-ratio: 16/9; object-fit: cover; }
+.render-thumb span { padding: 8px 12px; font-size: 12.5px; color: var(--ink-2); text-align: left; }
+.render-thumb:hover { border-color: var(--dawn); }
+.render-modal img { width: 100%; height: auto; border-radius: 12px; display: block; margin-bottom: var(--s3); }
+
 /* game HUD */
 .hud { position: absolute; top: 64px; left: var(--s4); width: min(380px, calc(100vw - 32px)); display: none; padding: var(--s3) var(--s4); border-radius: 18px; background: var(--glass); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); pointer-events: auto; }
 .hud.on { display: block; }
