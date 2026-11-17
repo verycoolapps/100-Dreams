@@ -1,0 +1,109 @@
+/* Enhanced Map View Modes */
+
+.view-mode-selector {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.view-mode-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.9rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: inherit;
+  font-family: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.view-mode-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 150, 100, 0.5);
+}
+
+.view-mode-btn[aria-checked="true"] {
+  background: rgba(255, 150, 100, 0.3);
+  border-color: rgba(255, 150, 100, 0.8);
+  font-weight: 600;
+}
+
+.view-mode-btn span {
+  display: none;
+}
+
+.view-mode-btn[aria-checked="true"] span {
+  display: inline;
+}
+
+/* Show labels on larger screens */
+@media (min-width: 768px) {
+  .view-mode-btn span {
+    display: inline;
+  }
+}
+
+/* Map container adjustments */
+.map.full {
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+
+/* Legend styles for floor plan view */
+.legend-compact {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.legend-color {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .view-mode-btn {
+    padding: 0.4rem 0.6rem;
+    font-size: 1.2rem;
+  }
+
+  .view-mode-btn span {
+    display: none !important;
+  }
+}
+
+/* Dark mode (already in dark by default) */
+@media (prefers-color-scheme: light) {
+  .view-mode-btn {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #333;
+  }
+
+  .view-mode-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+    border-color: rgba(255, 100, 50, 0.5);
+  }
+
+  .view-mode-btn[aria-checked="true"] {
+    background: rgba(255, 100, 50, 0.2);
+    border-color: rgba(255, 100, 50, 0.8);
+  }
+}
