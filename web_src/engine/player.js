@@ -223,13 +223,13 @@ export class Player {
     let groundY = -Infinity, groundObj = null;
     if (down && down.face) {
       const n = down.face.normal.clone().transformDirection(down.object.matrixWorld);
-      if (n.y > 0.5 && down.point.y <= this.pos.y + this.step + 0.05) { groundY = down.point.y; groundObj = down.object; }
+      if (n.y > 0.5 && down.point.y <= this.pos.y + this.step + 0.15) { groundY = down.point.y; groundObj = down.object; }
     }
     const next = this.pos.y + this.vel.y * dt;
     const skin = 0.001;
     if (this.vel.y <= 0 && next <= groundY + skin) {
       this.pos.y = groundY; this.vel.y = 0; this.onGround = true; this.groundObject = groundObj;
-    } else if (this.vel.y <= 0 && this.onGround && groundY > -Infinity && this.pos.y - groundY < this.step && this.pos.y - groundY > -0.05) {
+    } else if (this.vel.y <= 0 && this.onGround && groundY > -Infinity && this.pos.y - groundY < this.step + 0.1 && this.pos.y - groundY > -0.15) {
       // Still standing on the same level: stick to it instead of accumulating fall.
       this.pos.y = groundY; this.vel.y = 0;
     } else {
